@@ -18,7 +18,8 @@ console.log(refs.dataCountry);
 refs.input.addEventListener('keydown', debounce(onSearch, DEBOUNCE_DELAY));
 
 // если зажать Backspacе, то при удалении отправляется запрос. Это можно пофиксить?
-// вижу вариант решения поставить больше DEBOUNCE_DELAY
+// вижу решение:  поставить больше DEBOUNCE_DELAY
+
 function onSearch(evt) {
   nameCountrySearch = evt.target.value.trim();
   if (nameCountrySearch === '') {
