@@ -17,9 +17,9 @@ console.log(refs.dataCountry);
 
 refs.input.addEventListener('keydown', debounce(onSearch, DEBOUNCE_DELAY));
 
-// если зажать Backspacе, то при удалении отправляется запрос. Это можно пофиксить?
-// вижу решение:  поставить больше DEBOUNCE_DELAY
-
+// если использовать keydown и  зажать Backspacе, то при удалении отправляется запрос. Это можно пофиксить?
+// вижу 2 варианта решения: 1 вариант оставить keydown и  поставить больше DEBOUNCE_DELAY
+// 2 вариант поставить keypress и тогда у пользователя не будет возможности вставить скопированное название страны
 function onSearch(evt) {
   nameCountrySearch = evt.target.value.trim();
   if (nameCountrySearch === '') {
