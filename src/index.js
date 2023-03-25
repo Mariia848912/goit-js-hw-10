@@ -11,9 +11,9 @@ const refs = {
   listCountries: document.querySelector('.country-list'),
   dataCountry: document.querySelector('.country-info'),
 };
-console.log(refs.input);
-console.log(refs.listCountries);
-console.log(refs.dataCountry);
+// console.log(refs.input);
+// console.log(refs.listCountries);
+// console.log(refs.dataCountry);
 
 refs.input.addEventListener('keydown', debounce(onSearch, DEBOUNCE_DELAY));
 
@@ -22,10 +22,10 @@ refs.input.addEventListener('keydown', debounce(onSearch, DEBOUNCE_DELAY));
 // 2 вариант поставить keypress и тогда у пользователя не будет возможности вставить скопированное название страны
 function onSearch(evt) {
   nameCountrySearch = evt.target.value.trim();
-  if (nameCountrySearch === '') {
-    clearCountryData();
-    return;
-  }
+  // if (nameCountrySearch === '') {
+  //   clearCountryData();
+  //   return;
+  // }
   //   console.log(fetchCountries(nameCountrySearch));
   fetchCountries(nameCountrySearch).then(dataCountry => checkData(dataCountry));
 }
@@ -37,12 +37,16 @@ function clearCountryData() {
 
 function checkData(dataCountry) {
   //   console.log(dataCountry.length);
-  if (dataCountry.length > 10) {
+  if (dataCountry === undefined || dataCountry === '') {
+    clearCountryData();
+    return;
+  } else if (dataCountry.length > 10) {
+    clearCountryData();
     Notiflix.Notify.info(
       'Too many matches found. Please enter a more specific name.'
     );
   } else if (dataCountry.length >= 2 && dataCountry.length <= 10) {
-    console.log('в массиве от 2 до 10 стран');
+    // console.log('в массиве от 2 до 10 стран');
     makeListMarkup(dataCountry);
   } else {
     makeMarkupForOneCountry(dataCountry);
@@ -71,7 +75,7 @@ function makeMarkupForOneCountry(dataCountry) {
         languages,
       }) => {
         const language = Object.values(languages).join(', ');
-        console.log(language);
+        // console.log(language);
         return `<div class='title_box'><img src="${svg}"alt="Flag of ${official}"width="30" /><h1 class="title_name">${official}</h1></div>
 <p><span class="key">Capital:</span> ${capital}</p>
 <p><span class="key">Population:</span> ${population}</p>
