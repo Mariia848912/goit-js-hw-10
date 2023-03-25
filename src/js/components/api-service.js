@@ -10,7 +10,7 @@ export function fetchCountries(nameSearch) {
 
   return fetch(url)
     .then(response => {
-      console.log(response);
+      // console.log(response);
       if (!response.ok) {
         throw new Error(response.status);
       }
@@ -20,6 +20,7 @@ export function fetchCountries(nameSearch) {
     .catch(
       error =>
         Notiflix.Notify.failure('Oops, there is no country with that name')
+
       // console.dir(error)
     );
 }

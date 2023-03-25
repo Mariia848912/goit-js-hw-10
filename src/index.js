@@ -3,7 +3,7 @@ import debounce from 'lodash.debounce';
 import { fetchCountries } from './js/components/api-service';
 import Notiflix from 'notiflix';
 
-const DEBOUNCE_DELAY = 300;
+const DEBOUNCE_DELAY = 500;
 let nameCountrySearch = '';
 
 const refs = {
@@ -21,7 +21,9 @@ refs.input.addEventListener('keydown', debounce(onSearch, DEBOUNCE_DELAY));
 // вижу 2 варианта решения: 1 вариант оставить keydown и  поставить больше DEBOUNCE_DELAY
 // 2 вариант поставить keypress и тогда у пользователя не будет возможности вставить скопированное название страны
 function onSearch(evt) {
+  clearCountryData();
   nameCountrySearch = evt.target.value.trim();
+  //  clearCountryData();
   // if (nameCountrySearch === '') {
   //   clearCountryData();
   //   return;
@@ -37,11 +39,12 @@ function clearCountryData() {
 
 function checkData(dataCountry) {
   //   console.log(dataCountry.length);
-  if (dataCountry === undefined || dataCountry === '') {
-    clearCountryData();
-    return;
-  } else if (dataCountry.length > 10) {
-    clearCountryData();
+  // if (dataCountry === undefined || dataCountry === '') {
+  //   // clearCountryData();
+  //   return;
+  // } else
+  if (dataCountry.length > 10) {
+    // clearCountryData();
     Notiflix.Notify.info(
       'Too many matches found. Please enter a more specific name.'
     );
@@ -61,7 +64,7 @@ function makeListMarkup(dataCountry) {
     })
     .join('');
   appendCountriesListMarkup(listMarkUp);
-  console.log(listMarkUp);
+  // console.log(listMarkUp);
 }
 
 function makeMarkupForOneCountry(dataCountry) {
@@ -86,10 +89,10 @@ function makeMarkupForOneCountry(dataCountry) {
   appendCountryMarkup(markup);
 }
 function appendCountriesListMarkup(listMarkUp) {
-  clearCountryData();
+  // clearCountryData();
   refs.listCountries.innerHTML = listMarkUp;
 }
 function appendCountryMarkup(markup) {
-  clearCountryData();
+  // clearCountryData();
   refs.dataCountry.innerHTML = markup;
 }
