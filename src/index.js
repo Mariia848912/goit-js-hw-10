@@ -17,19 +17,18 @@ const refs = {
 
 refs.input.addEventListener('keydown', debounce(onSearch, DEBOUNCE_DELAY));
 
-// если использовать keydown и  зажать Backspacе, то при удалении отправляется запрос. Это можно пофиксить?
-// вижу 2 варианта решения: 1 вариант оставить keydown и  поставить больше DEBOUNCE_DELAY
-// 2 вариант поставить keypress и тогда у пользователя не будет возможности вставить скопированное название страны
 function onSearch(evt) {
   clearCountryData();
   nameCountrySearch = evt.target.value.trim();
-  //  clearCountryData();
-  // if (nameCountrySearch === '') {
-  //   clearCountryData();
-  //   return;
-  // }
-  //   console.log(fetchCountries(nameCountrySearch));
-  fetchCountries(nameCountrySearch).then(dataCountry => checkData(dataCountry));
+  if (!nameCountrySearch) {
+    return;
+  }
+  console.log(nameCountrySearch);
+  fetchCountries(nameCountrySearch)
+    .then(dataCountry => checkData(dataCountry))
+    .catch(error => {
+      console.log(error.message);
+    });
 }
 
 function clearCountryData() {
@@ -38,12 +37,9 @@ function clearCountryData() {
 }
 
 function checkData(dataCountry) {
-  //   console.log(dataCountry.length);
-  // if (dataCountry === undefined || dataCountry === '') {
-  //   // clearCountryData();
-  //   return;
-  // } else
-  if (dataCountry.length > 10) {
+  if (dataCountry.length === 0) {
+    return Notiflix.Notify.failure('Oops, something went wrong');
+  } else if (dataCountry.length > 10) {
     // clearCountryData();
     Notiflix.Notify.info(
       'Too many matches found. Please enter a more specific name.'
