@@ -6,7 +6,6 @@ export function fetchCountries(nameSearch) {
 
   return fetch(url)
     .then(response => {
-      console.log(response);
       if (!response.ok) {
         return [];
       }
